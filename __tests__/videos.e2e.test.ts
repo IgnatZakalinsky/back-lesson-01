@@ -1,6 +1,6 @@
 import {req} from './test-helpers'
-// import {setDB} from '../src/db/db'
-// import {dataset1} from './datasets'
+import {setDB} from '../src/db/db'
+import {dataset1} from './datasets'
 import {SETTINGS} from '../src/settings'
 
 describe('/videos', () => {
@@ -30,5 +30,28 @@ describe('/videos', () => {
 
         // expect(res.body.length).toBe(1)
         // expect(res.body[0]).toEqual(dataset1.videos[0])
+    })
+    it('should create', async () => {
+        setDB()
+        const newVideo: any /*InputVideoType*/ = {
+            title: 't1',
+            author: 'a1',
+            availableResolution: ['P144' /*Resolutions.P144*/]
+            // ...
+        }
+
+        const res = await req
+            .post(SETTINGS.PATH.VIDEOS)
+            .send(newVideo) // отправка данных
+            .expect(201)
+
+        expect(res.body.availableResolution).toEqual(newVideo.availableResolution)
+    })
+    it('shouldn\'t find', async () => {
+        setDB(dataset1)
+
+        const res = await req
+            .get(SETTINGS.PATH.VIDEOS + '/1')
+            .expect(404) // проверка на ошибку
     })
 })
