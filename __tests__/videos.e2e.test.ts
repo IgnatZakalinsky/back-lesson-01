@@ -45,6 +45,8 @@ describe('/videos', () => {
             .send(newVideo) // отправка данных
             .expect(201)
 
+        console.log(res.body)
+
         expect(res.body.availableResolution).toEqual(newVideo.availableResolution)
     })
     it('shouldn\'t find', async () => {
@@ -53,5 +55,7 @@ describe('/videos', () => {
         const res = await req
             .get(SETTINGS.PATH.VIDEOS + '/1')
             .expect(404) // проверка на ошибку
+
+        console.log(res.body)
     })
 })
