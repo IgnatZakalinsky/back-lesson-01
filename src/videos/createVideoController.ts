@@ -25,6 +25,7 @@ export const createVideoController = (req: Request<any, any, InputVideoType>, re
             .status(400)
             .json(errors)
         return
+        // return res.status(400).json(errors)
     }
 
     // если всё ок - добавляем видео
